@@ -1,0 +1,20 @@
+{
+    "name": "unlimited/policy-package",
+    "authors": [
+        {
+            "name": "macbookpro",
+            "email": "dev.mohamedgouda@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^7.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Unlimited\\Policy\\" : "src/"
+        }
+    },
+    "require": {
+        "realrashid/sweet-alert": "^5.1"
+    }
+}
