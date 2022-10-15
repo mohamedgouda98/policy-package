@@ -1,5 +1,6 @@
 {
     "name": "unlimited/policy-package",
+    "license": "MIT",
     "authors": [
         {
             "name": "macbookpro",
