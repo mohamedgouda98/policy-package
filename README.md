@@ -23,6 +23,10 @@ Unlimited\Policy\PolicyServiceProvider::class,
 php artisan vendor:publish --tag="policy-package-views"
 ```
 
+```php
+php artisan vendor:publish --tag="policy-package-config"
+```
+
 ## Routes
 ```php
 /admin/policy_category/index
