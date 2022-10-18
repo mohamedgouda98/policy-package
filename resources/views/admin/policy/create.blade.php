@@ -9,6 +9,8 @@
 </head>
 <body>
 
+@include('policyPackage::admin.errors')
+
 <form action="{{route('policy.store')}}" method="post">
     @csrf
     <input type="text" name="title" placeholder="Enter your Title"><br>

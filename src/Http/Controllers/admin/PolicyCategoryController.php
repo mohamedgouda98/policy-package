@@ -7,6 +7,7 @@ namespace Unlimited\Policy\Http\Controllers\admin;
 use Illuminate\Routing\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Unlimited\Policy\Models\PolicyCategory;
+use Illuminate\Support\Facades\Validator;
 
 class PolicyCategoryController extends Controller
 {
@@ -23,9 +24,14 @@ class PolicyCategoryController extends Controller
     }
     public function store()
     {
-        request()->validate([
-            'title' => 'required',
+        $validator = Validator::make(request()->all(),[
+            'title' => 'required|min:3'
         ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            return view('policyPackage::admin.policyCategory.create', compact('errors'));
+        }
 
         PolicyCategory::create([
             'title' => request('title')

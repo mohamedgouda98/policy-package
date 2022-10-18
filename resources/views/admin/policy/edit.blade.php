@@ -9,6 +9,8 @@
 </head>
 <body>
 
+@include('policyPackage::admin.errors')
+
 <form action="{{route('policy.update')}}" method="post">
     @csrf
     @method('PUT')
