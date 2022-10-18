@@ -5,7 +5,8 @@ use Unlimited\Policy\Http\Controllers\admin\PolicyCategoryController;
 use Unlimited\Policy\Http\Controllers\admin\PolicyController;
 use Unlimited\Policy\Http\Controllers\enduser\PolicyEnduserController;
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
+Route::group(['prefix' => config('policyPackage.routerPrefix'),
+], function (){
     Route::group(['prefix' => 'policy_category', 'as' => 'policyPackage.'], function(){
         Route::get('/index', [PolicyCategoryController::class, 'index'])->name('index');
         Route::get('/create', [PolicyCategoryController::class, 'create']);

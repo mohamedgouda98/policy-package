@@ -17,11 +17,15 @@ class PolicyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views/' => resource_path('views/vendor/policyPackage')
         ],'policy-package-views');
+
+        $this->publishes([
+            __DIR__.'/../config/config.php' => config_path('policyPackage.php'),
+        ], 'policy-package-config');
     }
 
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'policyPackage');
     }
 
 }
