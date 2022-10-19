@@ -5,6 +5,7 @@ namespace Unlimited\Policy\Http\Controllers\admin;
 
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Unlimited\Policy\Models\Policy;
 use Unlimited\Policy\Models\PolicyCategory;
@@ -25,11 +26,15 @@ class PolicyController extends Controller
     }
     public function store()
     {
-        request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'policy_category_id' => 'required|exists:policy_categories,id'
+        $validator = Validator::make(request()->all(),[
+            'title' => 'required|min:3',
+            'id' => 'required|exists:policy_categories,id'
         ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            return view('policyPackage::admin.policy.create', compact('errors'));
+        }
 
         Policy::create([
             'title' => request('title'),
@@ -51,12 +56,20 @@ class PolicyController extends Controller
 
     public function update()
     {
-        request()->validate([
+        $validator = Validator::make(request()->all(),[
             'title' => 'required',
             'description' => 'required',
             'policy_category_id' => 'required|exists:policy_categories,id',
             'id' => 'required|exists:policies,id'
         ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            $policy = Policy::find(request('id'));
+            $policyCategories = PolicyCategory::get();
+            return view('policyPackage::admin.policy.edit', compact(['errors', 'policy', 'policyCategories']));
+        }
+
 
         Policy::find(request('id'))->update([
             'title' => request('title'),

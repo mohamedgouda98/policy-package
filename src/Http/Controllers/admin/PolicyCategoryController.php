@@ -5,6 +5,7 @@ namespace Unlimited\Policy\Http\Controllers\admin;
 
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Unlimited\Policy\Models\PolicyCategory;
 use Illuminate\Support\Facades\Validator;
@@ -50,14 +51,16 @@ class PolicyCategoryController extends Controller
 
     public function update()
     {
-        request()->validate([
-            'title' => 'required',
+        $validator = Validator::make(request()->all(),[
+            'title' => 'required|min:3',
             'id' => 'required|exists:policy_categories,id'
         ]);
 
-        PolicyCategory::find(request('id'))->update([
-            'title' => request('title')
-        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            $policyCategory = PolicyCategory::find(request('id'));
+            return view('policyPackage::admin.policyCategory.edit', compact(['errors', 'policyCategory']));
+        }
 
         Alert::success('Policy Category', 'Policy Category Updated Successfully');
 
