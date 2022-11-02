@@ -33,7 +33,8 @@ class PolicyController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors()->messages();
-            return view('policyPackage::admin.policy.create', compact('errors'));
+            $policyCategories = PolicyCategory::get();
+            return view('policyPackage::admin.policy.create', compact('errors', 'policyCategories'));
         }
 
         Policy::create([
